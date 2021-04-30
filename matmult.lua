@@ -36,9 +36,6 @@ function main()
 	
 	
 	
-	myArray = createRandMat(squareSize)
-
-	idMat = createIDMat(squareSize)
 
 	--~ printMatrix(myArray)
 	--~ printMatrix(idMat)
@@ -46,6 +43,10 @@ function main()
 	--~ io.write("Press enter to continue.")
 	--~ io.read()
 	
+	
+	--Start tests
+	myArray = createRandMat(squareSize)
+	idMat = createIDMat(squareSize)
 	print("Now running the block style tests for myArray*idMat...")
 	local blockSize = 8
 	fwrite("Now timing the block style with block size: %d\n", blockSize)
@@ -92,10 +93,81 @@ function main()
 	timeMultTwo(myArray, idMat)
 	fwrite("Now timing myArray*myArray...\n")
 	timeMultTwo(myArray, myArray)
-	--~ out = multSqBlockStyle(myArray, idMat, 5)
 	
-	--~ fwrite("Is it correct?: " )
-	--~ isCorrect = checkIfMatEqual(out, myArray)
+	
+	fID = createFlatIDMatrix(squareSize)
+	fRM = createFlatRandMatrix(squareSize)
+	
+	print("\nNow running the Flat block style tests for fRM*fID...")
+	--~ local blockSize = 8
+	--~ fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	--~ timeFlatBlockMultTwo(fRM, fID, blockSize)
+	--~ local blockSize = 10
+	--~ fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	--~ timeFlatBlockMultTwo(fRM, fID, blockSize)
+	--~ local blockSize = 20
+	--~ fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	--~ timeFlatBlockMultTwo(fRM, fID, blockSize)
+	--~ local blockSize = 25
+	--~ fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	--~ timeFlatBlockMultTwo(fRM, fID, blockSize)
+	--~ local blockSize = 40
+	--~ fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	--~ timeFlatBlockMultTwo(fRM, fID, blockSize)
+	local blockSize = 50
+	fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	timeFlatBlockMultTwo(fRM, fID, blockSize)
+	local blockSize = 100
+	fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	timeFlatBlockMultTwo(fRM, fID, blockSize)
+	local blockSize = 200
+	fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	timeFlatBlockMultTwo(fRM, fID, blockSize)
+	local blockSize = 250
+	fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	timeFlatBlockMultTwo(fRM, fID, blockSize)
+	local blockSize = 500
+	fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	timeFlatBlockMultTwo(fRM, fID, blockSize)
+	
+	print("\nNow running the Flat block style tests for fRM*fRM...")
+	--~ local blockSize = 8
+	--~ fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	--~ timeFlatBlockMultTwo(fRM, fRM, blockSize)
+	--~ local blockSize = 10
+	--~ fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	--~ timeFlatBlockMultTwo(fRM, fRM, blockSize)
+	--~ local blockSize = 20
+	--~ fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	--~ timeFlatBlockMultTwo(fRM, fRM, blockSize)
+	--~ local blockSize = 25
+	--~ fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	--~ timeFlatBlockMultTwo(fRM, fRM, blockSize)
+	--~ local blockSize = 40
+	--~ fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	--~ timeFlatBlockMultTwo(fRM, fRM, blockSize)
+	local blockSize = 50
+	fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	timeFlatBlockMultTwo(fRM, fRM, blockSize)
+	local blockSize = 100
+	fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	timeFlatBlockMultTwo(fRM, fRM, blockSize)
+	local blockSize = 200
+	fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	timeFlatBlockMultTwo(fRM, fRM, blockSize)
+	local blockSize = 250
+	fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	timeFlatBlockMultTwo(fRM, fRM, blockSize)
+	local blockSize = 500
+	fwrite("Now timing the Flat block style with block size: %d\n", blockSize)
+	timeFlatBlockMultTwo(fRM, fRM, blockSize)
+	
+	
+	print("\nNow running FLAT unoptimized style...")
+	fwrite("Multiplying myArray and idMat...\n")
+	timeFlatMultTwo(fRM, fID)
+	fwrite("Now timing myArray*myArray...\n")
+	timeFlatMultTwo(fRM, fRM)
 
 	
 	fwrite("Overall time: %f\n", os.clock() - start)
@@ -131,6 +203,24 @@ end
 function timeBlockMultTwo(A, B, blockSize)
 	local start = os.clock()
 	out = multSqBlockStyle(A, B, blockSize)
+	local total = os.clock() - start
+	fwrite("done!\tTook %.2f seconds!\n", total)
+	
+	return total
+end
+
+function timeFlatBlockMultTwo(A, B, blockSize)
+	local start = os.clock()
+	out = multFlatBlockMats(A, B, blockSize)
+	local total = os.clock() - start
+	fwrite("done!\tTook %.2f seconds!\n", total)
+	
+	return total
+end
+
+function timeFlatMultTwo(A, B)
+	local start = os.clock()
+	out = multFlatMats(A, B)
 	local total = os.clock() - start
 	fwrite("done!\tTook %.2f seconds!\n", total)
 	
